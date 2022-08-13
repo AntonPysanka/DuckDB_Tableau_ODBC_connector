@@ -45,7 +45,7 @@
       <argument type='real' />
     </function>
     <function group='numeric' name='COT' return-type='real'>
-      <formula><![CDATA[(CASE WHEN %1 <> 0 THEN COT(%1) ELSE NULL END)]]></formula>
+      <formula>CASE WHEN %1 <> 0 THEN COT(%1) ELSE NULL END</formula>
       <argument type='real' />
     </function>
     <function group='numeric' name='DEGREES' return-type='real'>
