@@ -176,7 +176,7 @@
       <argument type='real' />
     </function>
     <function group='numeric' name='SQRT' return-type='real'>
-      <formula><![CDATA[(CASE WHEN %1 < 0 THEN NULL ELSE SQRT(%1) END)]]></formula>
+      <formula><(CASE WHEN %1 < 0 THEN NULL ELSE SQRT(%1) END)></formula>
       <argument type='real' />
     </function>
     <function group='numeric' name='SQUARE' return-type='real'>
@@ -200,44 +200,41 @@
       <argument type='int' />
     </function>
     <function group='string' name='ASCII' return-type='int'>
-      <formula>ASCII(CAST(%1 AS TEXT))</formula>
+      <formula>ASCII(%1)</formula>
       <argument type='str' />
     </function>
     <function group='string' name='CHAR' return-type='str'>
-      <formula><![CDATA[(CASE WHEN (%1 >= 0) AND (%1 < 256) THEN CHR(CAST(FLOOR(%1) AS INTEGER)) ELSE NULL END)]]></formula>
-      <argument type='real' />
+      <formula><CHR(%1)></formula>
+      <argument type='int' />
     </function>
     <function group='string' name='CONTAINS' return-type='bool'>
-      <formula>(STRPOS(CAST(%1 AS TEXT),CAST(%2 AS TEXT)) &gt; 0)</formula>
+      <formula>CONTAINS(%1,%2)</formula>
       <argument type='str' />
       <argument type='str' />
     </function>
     <function group='string' name='ENDSWITH' return-type='bool'>
-      <formula><![CDATA[(SUBSTR(RTRIM(CAST(%1 AS TEXT), ' '), (CASE WHEN (LENGTH(RTRIM(CAST(%1 AS TEXT), ' ')) - LENGTH(CAST(%2 AS TEXT))) < 0 THEN 1 ELSE LENGTH(RTRIM(CAST(%1 AS TEXT), ' ')) - LENGTH(CAST(%2 AS TEXT)) + 1 END), LENGTH(CAST(%2 AS TEXT))) = CAST(%2 AS TEXT))]]></formula>
+      <formula>suffix(%1, %2)</formula>
       <argument type='str' />
       <argument type='str' />
     </function>
     <function group='string' name='FIND' return-type='int'>
-      <formula>STRPOS(CAST(%1 AS TEXT),CAST(%2 AS TEXT))</formula>
+      <formula>instr(%1, %2)</formula>
       <argument type='str' />
       <argument type='str' />
     </function>
     <function group='string' name='FIND' return-type='int'>
-      <formula>(CASE
-	WHEN %3 IS NULL THEN NULL
-	WHEN 0 = STRPOS(SUBSTR(CAST(%1 AS TEXT),GREATEST(1,CAST(FLOOR(%3) AS INTEGER))),CAST(%2 AS TEXT)) THEN 0
-	ELSE (STRPOS(SUBSTR(CAST(%1 AS TEXT),GREATEST(1,CAST(FLOOR(%3)AS INTEGER))),CAST(%2 AS TEXT)) + GREATEST(1,CAST(FLOOR(%3) AS INTEGER)) - 1)	END)</formula>
+      <formula>(instr(%1, array_slice(%2, cast(floor(%3) as bigint), NULL)) + cast(floor(%3) as bigint) - 1)</formula>
       <argument type='str' />
       <argument type='str' />
       <argument type='real' />
     </function>
     <function group='string' name='LEFT' return-type='str'>
-      <formula>(CASE WHEN %2 &gt;= 0 THEN SUBSTR(CAST(%1 AS TEXT), 1, CAST(FLOOR(%2) AS INTEGER)) ELSE NULL END)</formula>
+      <formula>LEFT(%1, CAST(FLOOR(%2) AS BIGINT))</formula>
       <argument type='str' />
       <argument type='real' />
     </function>
     <function group='string' name='LEN' return-type='int'>
-      <formula>LENGTH(CAST(%1 AS TEXT))</formula>
+      <formula>LENGTH(%1)</formula>
       <argument type='str' />
     </function>
     <function group='string' name='LOWER' return-type='str'>
